@@ -1,0 +1,115 @@
+!Input file for 2D FVM Multigrid Simulations
+!Notes: Use FORTRAN namelist feature to read the file
+! Can have blank lines and comments in the namelist input file
+! Place these comments between NAMELISTs
+! Not every compiler supports comments within the namelist
+!	in particular vastf90/g77 does not
+! Some will skip NAMELISTs not directly referenced in read
+! Use power of 2 for specifying the grid size, e.g. 128, 256 etc. 
+! Data types: geometry_data, boundary_data, property_data, parameter_data, debug_data, multigrid_data
+
+
+! Problem specification
+!-------------------------
+&geometry_data
+
+dim_prob = 2 ! Dimension of problem
+
+prob_lo(1:3) = 0.0d0 0.0d0 0.0d0
+prob_hi(1:3) = 1.7522d-1 1.7522d-1 0.0d0
+
+!Grid Size
+icv = 128
+jcv = 128
+
+!Grid type (uniform/nonuniform)
+grid_type = 'uniform'
+
+/
+
+&property_data
+
+! Fluid Property tag
+! Flag 1 for water, Flag 2 for air
+
+!Variable properties (on/off)
+variable_property = .false.
+prop_flag = 2
+
+!rho = 997.0d0		! density in Kg/m**3
+!mu = 8.9d-4
+!kcond = 0.563d0	! thermal conductivity in W/m k
+!cp = 4179.0d0
+/
+
+&boundary_data
+
+! Boundary conditions
+
+! u-velocity (m/s)
+u_west = 0.0d0
+u_east = 0.0d0
+u_south = 0.0d0
+u_north = 0.0d0
+
+! v-velocity (m/s)
+v_west = 0.0d0
+v_east = 0.0d0
+v_south = 0.0d0
+v_north = 0.0d0
+
+!Temperature (deg Celcius)
+t_west = 20.0d0
+t_east = 40.0d0
+t_south = 20.0d0
+t_north = 20.0d0
+
+/
+&parameter_data
+
+!Reynolds Number
+reynolds_number = 1000.0d0
+
+! Gravitational acceleration
+!gravity = 9.80d0
+gravity = 0.0d0
+
+!Relaxation Factors
+alphau = 5.0d-1
+alphav = 5.0d-1
+alphap = 8.0d-1
+alphat = 1.0d0
+
+!Convergence Criteria
+epsilonu = 1.0d-6
+epsilonv = 1.0d-6
+epsilonp = 1.0d-5
+epsilont = 1.0d-6
+
+!Maximum number of iteration for Navier Stokes Solver (inner loop / steady state solution)
+itermax = 101002
+
+!Problem name (output file)
+prog_name = 'cavity2D'
+
+!VTK file writing (on/off)
+write_VTK = .false.
+output_step = 1
+monitor_step = 20
+
+!Time Parameters (if the flow is unsteady)
+time_step = 1.0d10
+max_time = 1.0d10
+
+/
+&debug_data
+! Set debug value 0 to turn it off or 1 to turn it on
+debug = 0
+parallel_debug = 0
+
+/
+&multigrid_data
+! Set the multigrid data
+num_level = 3
+mg_handle = 'on'
+/
