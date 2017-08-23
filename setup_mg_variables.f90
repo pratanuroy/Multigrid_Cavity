@@ -32,7 +32,7 @@ do i = num_level, 1, -1
  xi = mg_level(i)%xi
  xf = mg_level(i)%xf
 
- write(*,*) 'ilevel = ', i, nx, ny, xi, xf
+ !write(*,*) 'ilevel = ', i, nx, ny, xi, xf
 
 ! Property variables
 
