@@ -77,7 +77,7 @@ program main
         !! For periodic boundary condition
         !! The leftmost processor sends the left boundary values to the right boundary value of rightmost procesor and vice versa
         !
-        !if ( taskid .eq. 0) then
+        !if ( taskid .eq. root) then
         !
         ! iprevid = numtasks-1
         !
@@ -90,7 +90,7 @@ program main
         ! For usual boundary condition
         ! The leftmost processor has no left neighbour and the rightmost processor has no right neighbour
 
-        if ( taskid .eq. 0) then
+        if ( taskid .eq. root) then
 
                 iprevid = MPI_PROC_NULL
 
@@ -128,6 +128,11 @@ program main
 
         do ilevel = 1,num_level
 
+
+        !!!! This part is for unsteady simulations. Currently turned off
+        !!!! ------------------------------------------------------------
+        if (1 .eq. 0) then
+
         mg_level(ilevel)%u0(:,:) = mg_level(ilevel)%u(:,:)
         mg_level(ilevel)%v0(:,:) = mg_level(ilevel)%v(:,:)
         !mg_level(ilevel)%t0(:,:) = mg_level(ilevel)%t(:,:)
@@ -136,9 +141,6 @@ program main
         mg_level(ilevel)%vf0(:,:) = mg_level(ilevel)%vf(:,:)
 
 
-        !!!! This part is for unsteady simulations. Currently turned off
-        !!!! ------------------------------------------------------------
-        if (1 .eq. 0) then 
         call unsteady_functions(mg_level(ilevel)%ap_zero, &
                 mg_level(ilevel)%u0,      &
                 mg_level(ilevel)%v0,      &
@@ -199,7 +201,7 @@ program main
 
         tcounter = tcounter + 1
 
-        if (taskid .eq. 0) then
+        if (taskid .eq. root) then
 
                 write(*,*) 'time step = ', time
 
