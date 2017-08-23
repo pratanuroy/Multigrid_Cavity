@@ -37,8 +37,6 @@ program main
 
         if (taskid .eq. root) write(*,*) 'Number of processor = ', numtasks
 
-        root = 0
-
         ! Read data by root processor (processor no. 0)
 
         call read_data
