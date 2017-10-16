@@ -11,7 +11,7 @@ Link (Accepted Manuscript): https://www.researchgate.net/profile/Pratanu_Roy/pub
 
 Notes on how to use the code:
 
-The input parameters can be changed in the input_data.txt file. The grid size should be a multiple of 2, e.g. 128, 256, and so on. 
-The number of multigrid levels (num_level) should be increased by 1 with successive increase in grid size. 
+The input parameters can be changed in the input_data.txt file. The grid size should be a power of 2, e.g. 128, 256, and so on. 
+The number of multigrid levels (num_level) should be increased by 1 with successive increase in grid size. The number of processes used should be multiple of 2 and the maximum number of processes is 16 (as the coarse grid size is 16 x 16). 
 
 For postprocessing, set the write_vtk flag to .true. and the output will be written in VTR/VTK format. The .visit file can be loaded in Visit.
